@@ -1,5 +1,6 @@
 package br.com.gabriel.auto.reader;
 
+import br.com.gabriel.auto.model.AutoDados;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -11,20 +12,22 @@ import java.util.regex.*;
 import java.io.File;
 
 public class LeitorPDF {
-    public static void main(String[] args) throws IOException {
-        PDDocument document = PDDocument.load(new File("relatorio.pdf"));
-        PDFTextStripper stripper = new PDFTextStripper();
-        String texto = stripper.getText(document);
+    AutoDados autoDados = new AutoDados();
+    LeitorHelper leitorHelper = new LeitorHelper();
 
-        String palavraChave = "nome ";
-        int index = texto.indexOf(palavraChave);
+    private static String extrairTexto() {
+        try (PDDocument document = PDDocument.load(new File("arquivos/relatorio.pdf"))){
+            PDFTextStripper stripper= new PDFTextStripper();
+            String texto = stripper.getText(document);
+            return texto;
 
-        if (index != -1) {
-            String resto = texto.substring(index + palavraChave.length());
-            String nome = resto.split("\\r?\\n")[0];
-            System.out.println(nome);
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
         }
-
-        System.out.println("fim");
     }
+
+    public static void main(String[] args) {}
+
+
 }
