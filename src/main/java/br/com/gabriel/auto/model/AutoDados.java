@@ -1,8 +1,7 @@
 package br.com.gabriel.auto.model;
 
 public class AutoDados {
-    private String juizoDeDireito, cidadeJuizo, praca, numeroProcesso, nomeExecutado, nomeExequente, dataLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
-    private String dia, diaPorExtenso, mes, ano, valorPorExtenso;
+    private String juizoDeDireito, praca, numeroProcesso, nomeExecutado, nomeExequente, dataPrimeiroLeilao, dataSegundoLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
 
 
     public String getJuizoDeDireito() {
@@ -10,13 +9,6 @@ public class AutoDados {
     }
     public void setJuizoDeDireito(String juizoDeDireito) {
         this.juizoDeDireito = juizoDeDireito;
-    }
-
-    public String getCidadeJuizo() {
-        return cidadeJuizo;
-    }
-    public void setCidadeJuizo(String cidadeJuizo) {
-        this.cidadeJuizo = cidadeJuizo;
     }
 
     public String getPraca() {
@@ -47,11 +39,18 @@ public class AutoDados {
         this.nomeExequente = nomeExequente;
     }
 
-    public String getDataLeilao() {
-        return dataLeilao;
+    public String getDataPrimeiroLeilao() {
+        return dataPrimeiroLeilao;
     }
-    public void setDataLeilao(String dataLeilao) {
-        this.dataLeilao = dataLeilao;
+    public void setDataPrimeiroLeilao(String dataLeilao) {
+        this.dataPrimeiroLeilao = dataLeilao;
+    }
+
+    public String getDataSegundoLeilao() {
+        return dataSegundoLeilao;
+    }
+    public void setDataSegundoLeilao(String dataSegundoLeilao) {
+        this.dataSegundoLeilao = dataSegundoLeilao;
     }
 
     public String getHoraLeilao() {
@@ -82,12 +81,6 @@ public class AutoDados {
         this.valor = valor;
     }
 
-    public String getValorPorExtenso() {
-        return valorPorExtenso;
-    }
-    public void setValorPorExtenso(String valorPorExtenso) {
-        this.valorPorExtenso = valorPorExtenso;
-    }
 
     public String getLoginArrematante() {
         return loginArrematante;
@@ -173,31 +166,32 @@ public class AutoDados {
         this.nomeJuiz = nomeJuiz;
     }
 
-    public String getDia() {
-        return dia;
-    }
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    public String getDiaPorExtenso() {
-        return diaPorExtenso;
-    }
-    public void setDiaPorExtenso(String diaPorExtenso) {
-        this.diaPorExtenso = diaPorExtenso;
-    }
-
-    public String getMes() {
-        return mes;
-    }
-    public void setMes(String mes) {
-        this.mes = mes;
-    }
-
-    public String getAno() {
-        return ano;
-    }
-    public void setAno(String ano) {
-        this.ano = ano;
+    @Override
+    public String toString() {
+        return "AutoDados{" +
+                "juizoDeDireito='" + juizoDeDireito + '\'' +
+                ", praca='" + praca + '\'' +
+                ", numeroProcesso='" + numeroProcesso + '\'' +
+                ", nomeExecutado='" + nomeExecutado + '\'' +
+                ", nomeExequente='" + nomeExequente + '\'' +
+                ", dataPrimeiroLeilao='" + dataPrimeiroLeilao + '\'' +
+                ", dataSegundoLeilao='" + dataSegundoLeilao + '\'' +
+                ", horaLeilao='" + horaLeilao + '\'' +
+                ", lote='" + lote + '\'' +
+                ", valor='" + valor + '\'' +
+                ", loginArrematante='" + loginArrematante + '\'' +
+                ", nomeArrematante='" + nomeArrematante + '\'' +
+                ", cpfArrematante='" + cpfArrematante + '\'' +
+                ", rgArrematante='" + rgArrematante + '\'' +
+                ", enderecoArrematante='" + enderecoArrematante + '\'' +
+                ", cidadeArrematante='" + cidadeArrematante + '\'' +
+                ", cepArrematante='" + cepArrematante + '\'' +
+                ", emailArrematante='" + emailArrematante + '\'' +
+                ", telefoneArrematante='" + telefoneArrematante + '\'' +
+                ", celularArrematante='" + celularArrematante + '\'' +
+                ", ipArrematante='" + ipArrematante + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", nomeJuiz='" + nomeJuiz + '\'' +
+                '}';
     }
 }
