@@ -1,7 +1,7 @@
 package br.com.gabriel.auto.model;
 
 public class AutoDados {
-    private String juizoDeDireito, praca, numeroProcesso, nomeExecutado, nomeExequente, dataPrimeiroLeilao, dataSegundoLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
+    private String juizoDeDireito, cidadeJuizo, praca, numeroProcesso, nomeExecutado, nomeExequente, diaPrimeiroLeilao, diaSegundoLeilao, mesPrimeiroLeilao, mesSegundoLeilao, anoPrimeiroLeilao, anoSegundoLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
 
 
     public String getJuizoDeDireito() {
@@ -9,6 +9,14 @@ public class AutoDados {
     }
     public void setJuizoDeDireito(String juizoDeDireito) {
         this.juizoDeDireito = juizoDeDireito;
+    }
+
+    public String getCidadeJuizo() {
+        return cidadeJuizo;
+    }
+
+    public void setCidadeJuizo(String cidadeJuizo) {
+        this.cidadeJuizo = cidadeJuizo;
     }
 
     public String getPraca() {
@@ -39,18 +47,52 @@ public class AutoDados {
         this.nomeExequente = nomeExequente;
     }
 
-    public String getDataPrimeiroLeilao() {
-        return dataPrimeiroLeilao;
-    }
-    public void setDataPrimeiroLeilao(String dataLeilao) {
-        this.dataPrimeiroLeilao = dataLeilao;
+    public String getDiaPrimeiroLeilao() {
+        return diaPrimeiroLeilao;
     }
 
-    public String getDataSegundoLeilao() {
-        return dataSegundoLeilao;
+    public void setDiaPrimeiroLeilao(String diaPrimeiroLeilao) {
+        this.diaPrimeiroLeilao = diaPrimeiroLeilao;
     }
-    public void setDataSegundoLeilao(String dataSegundoLeilao) {
-        this.dataSegundoLeilao = dataSegundoLeilao;
+
+    public String getDiaSegundoLeilao() {
+        return diaSegundoLeilao;
+    }
+
+    public void setDiaSegundoLeilao(String diaSegundoLeilao) {
+        this.diaSegundoLeilao = diaSegundoLeilao;
+    }
+
+    public String getMesPrimeiroLeilao() {
+        return mesPrimeiroLeilao;
+    }
+
+    public void setMesPrimeiroLeilao(String mesPrimeiroLeilao) {
+        this.mesPrimeiroLeilao = mesPrimeiroLeilao;
+    }
+
+    public String getMesSegundoLeilao() {
+        return mesSegundoLeilao;
+    }
+
+    public void setMesSegundoLeilao(String mesSegundoLeilao) {
+        this.mesSegundoLeilao = mesSegundoLeilao;
+    }
+
+    public String getAnoPrimeiroLeilao() {
+        return anoPrimeiroLeilao;
+    }
+
+    public void setAnoPrimeiroLeilao(String anoPrimeiroLeilao) {
+        this.anoPrimeiroLeilao = anoPrimeiroLeilao;
+    }
+
+    public String getAnoSegundoLeilao() {
+        return anoSegundoLeilao;
+    }
+
+    public void setAnoSegundoLeilao(String anoSegundoLeilao) {
+        this.anoSegundoLeilao = anoSegundoLeilao;
     }
 
     public String getHoraLeilao() {
@@ -80,7 +122,6 @@ public class AutoDados {
     public void setValor(String valor) {
         this.valor = valor;
     }
-
 
     public String getLoginArrematante() {
         return loginArrematante;
@@ -170,12 +211,17 @@ public class AutoDados {
     public String toString() {
         return "AutoDados{" +
                 "juizoDeDireito='" + juizoDeDireito + '\'' +
+                ", cidadeJuizo='" + cidadeJuizo + '\'' +
                 ", praca='" + praca + '\'' +
                 ", numeroProcesso='" + numeroProcesso + '\'' +
                 ", nomeExecutado='" + nomeExecutado + '\'' +
                 ", nomeExequente='" + nomeExequente + '\'' +
-                ", dataPrimeiroLeilao='" + dataPrimeiroLeilao + '\'' +
-                ", dataSegundoLeilao='" + dataSegundoLeilao + '\'' +
+                ", diaPrimeiroLeilao='" + diaPrimeiroLeilao + '\'' +
+                ", diaSegundoLeilao='" + diaSegundoLeilao + '\'' +
+                ", mesPrimeiroLeilao='" + mesPrimeiroLeilao + '\'' +
+                ", mesSegundoLeilao='" + mesSegundoLeilao + '\'' +
+                ", anoPrimeiroLeilao='" + anoPrimeiroLeilao + '\'' +
+                ", anoSegundoLeilao='" + anoSegundoLeilao + '\'' +
                 ", horaLeilao='" + horaLeilao + '\'' +
                 ", lote='" + lote + '\'' +
                 ", valor='" + valor + '\'' +

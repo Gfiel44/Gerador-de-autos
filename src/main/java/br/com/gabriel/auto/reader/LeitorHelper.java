@@ -1,7 +1,11 @@
 package br.com.gabriel.auto.reader;
 
 import br.com.gabriel.auto.model.AutoDados;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,10 +75,19 @@ public class LeitorHelper {
         }
 
         String dataPrimeiroLeilao = encontrarInformacao(textoCompleto, "1º Data do Leilão:(.*)");
-        dados.setDataPrimeiroLeilao(dataPrimeiroLeilao);
+        String[] partes = dataPrimeiroLeilao.split(" ");
+        String[] dataPrimeiroDividida = partes[0].split("/");
+        dados.setDiaPrimeiroLeilao(dataPrimeiroDividida[0]);
+        dados.setMesPrimeiroLeilao(dataPrimeiroDividida[1]);
+        dados.setAnoPrimeiroLeilao(dataPrimeiroDividida[2]);
+        dados.setHoraLeilao(partes[1]);
 
         String dataSegundoLeilao = encontrarInformacao(textoCompleto, "2º Data do Leilão:(.*)");
-        dados.setDataSegundoLeilao(dataSegundoLeilao);
+        String[] partesSegundo = dataSegundoLeilao.split(" ");
+        String[] dataSegundoDividida = partesSegundo[0].split("/");
+        dados.setDiaSegundoLeilao(dataSegundoDividida[0]);
+        dados.setMesSegundoLeilao(dataSegundoDividida[1]);
+        dados.setAnoSegundoLeilao(dataSegundoDividida[2]);
     }
 
     public static void extrairDadosProcesso(AutoDados dados, String textoCompleto){
@@ -99,7 +112,27 @@ public class LeitorHelper {
             dados.setNomeExequente(matcherExequente.group(1).trim());
         }
 
-        String juizoDeDireito = encontrarInformacao(textoCompleto, "Comitente: (.*)");
+        String juizoDeDireito = encontrarInformacao(textoCompleto, "Comitente: (.*) da Comarca");
         dados.setJuizoDeDireito(juizoDeDireito);
+
+        String cidadeJuizo = encontrarInformacao(textoCompleto, "da Comarca de (.*)");
+        dados.setCidadeJuizo(cidadeJuizo);
+    }
+
+    public static void extrairDadosJuiz(AutoDados dados){
+
+        try (PDDocument document = PDDocument.load(new File("arquivos/relatorioJuiz.pdf"))){
+            PDFTextStripper stripper= new PDFTextStripper();
+            String texto = stripper.getText(document);
+
+            Pattern padraoJuiz = Pattern.compile(dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo() + "[\\s\\S]*?Titular:\\s*([^\\n\\r]+)");
+            Matcher matcherJuiz = padraoJuiz.matcher(texto);
+            if (matcherJuiz.find()) {
+                dados.setNomeJuiz(matcherJuiz.group(1).trim());
+            }
+
+        }catch (IOException e){
+            System.err.println("Erro ao ler o arquivo PDF: " + e.getMessage());
+        }
     }
 }
