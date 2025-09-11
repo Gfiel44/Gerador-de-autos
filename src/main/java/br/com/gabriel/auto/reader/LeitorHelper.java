@@ -8,6 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Map;
+import java.io.FileReader;
+
+import org.supercsv.cellprocessor.constraint.NotNull;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvMapReader;
+import org.supercsv.io.ICsvMapReader;
+import org.supercsv.prefs.CsvPreference;
 
 public class LeitorHelper {
     private static String encontrarInformacao(String texto, String regex){
@@ -133,6 +141,43 @@ public class LeitorHelper {
 
         }catch (IOException e){
             System.err.println("Erro ao ler o arquivo PDF: " + e.getMessage());
+        }
+    }
+
+    public static void extrairDadosCsv(AutoDados dados){
+        String nomeComitente = dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo();
+        String caminhoArquivoCSV = "arquivos/arquivo.csv";
+
+        try (ICsvMapReader mapReader = new CsvMapReader(new FileReader(caminhoArquivoCSV), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE)){
+            String[] cabecalho = mapReader.getHeader(true);
+
+            Map<String, String> linha;
+            while ((linha = mapReader.read(cabecalho)) != null){
+                String nome = linha.get("Nome");
+
+                if (nomeComitente.equals(nome)) {
+                    String ufJuizo = linha.get("UF");
+                    dados.setUfJuizo(ufJuizo);
+
+                    String cepJuizo = linha.get("Cep");
+                    dados.setCepJuizo(cepJuizo);
+
+                    String enderecoJuizo = linha.get("Endereço");
+                    dados.setEnderecoJuizo(enderecoJuizo);
+
+                    String numeroEnderecoJuizo = linha.get("Número do Endereço");
+                    dados.setNumeroEnderecoJuizo(numeroEnderecoJuizo);
+
+                    String bairroJuizo = linha.get("Bairro");
+                    dados.setBairroJuizo(bairroJuizo);
+
+                    String complementoJuizo = linha.get("Complemento");
+                    dados.setComplementoJuizo(complementoJuizo);
+                    return;
+                }
+            }
+        }catch (IOException e){
+            System.err.println("Erro ao ler o arquivo CSV: " + e.getMessage());
         }
     }
 }

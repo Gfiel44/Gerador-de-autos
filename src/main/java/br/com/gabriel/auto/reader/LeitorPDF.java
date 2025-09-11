@@ -19,6 +19,7 @@ public class LeitorPDF {
             LeitorHelper.extrairDadosLeilao(dados, texto);
             LeitorHelper.extrairDadosProcesso(dados, texto);
             LeitorHelper.extrairDadosJuiz(dados);
+            LeitorHelper.extrairDadosCsv(dados);
         }catch (IOException e){
             System.err.println("Erro ao ler o arquivo PDF: " + e.getMessage());
             return null;
