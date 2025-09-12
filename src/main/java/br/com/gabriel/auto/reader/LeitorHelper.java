@@ -6,10 +6,14 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Map;
 import java.io.FileReader;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -127,26 +131,12 @@ public class LeitorHelper {
         dados.setCidadeJuizo(cidadeJuizo);
     }
 
-    public static void extrairDadosJuiz(AutoDados dados){
-
-        try (PDDocument document = PDDocument.load(new File("arquivos/relatorioJuiz.pdf"))){
-            PDFTextStripper stripper= new PDFTextStripper();
-            String texto = stripper.getText(document);
-
-            Pattern padraoJuiz = Pattern.compile(dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo() + "[\\s\\S]*?Titular:\\s*([^\\n\\r]+)");
-            Matcher matcherJuiz = padraoJuiz.matcher(texto);
-            if (matcherJuiz.find()) {
-                dados.setNomeJuiz(matcherJuiz.group(1).trim());
-            }
-
-        }catch (IOException e){
-            System.err.println("Erro ao ler o arquivo PDF: " + e.getMessage());
-        }
-    }
 
     public static void extrairDadosCsv(AutoDados dados){
         String nomeComitente = dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo();
         String caminhoArquivoCSV = "arquivos/arquivo.csv";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Date data = new Date();
 
         try (ICsvMapReader mapReader = new CsvMapReader(new FileReader(caminhoArquivoCSV), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE)){
             String[] cabecalho = mapReader.getHeader(true);
@@ -173,6 +163,23 @@ public class LeitorHelper {
 
                     String complementoJuizo = linha.get("Complemento");
                     dados.setComplementoJuizo(complementoJuizo);
+
+                    for(int i = 1; i < 10; i++){
+                        if(linha.get(String.format("Substituto %d Nome", i)) != null){
+                            LocalDate dataInicio = LocalDate.parse(linha.get(String.format("Substituto %d Início", i)), formatter);
+                            LocalDate dataFim = LocalDate.parse(linha.get(String.format("Substituto %d Fim", i)), formatter);
+
+                            if(dataInicio.isBefore(LocalDate.now()) && dataFim.isAfter(LocalDate.now())){
+                                dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
+                            }else {
+                                dados.setNomeJuiz(linha.get("Titular"));
+                            }
+
+                        }else{
+                            dados.setNomeJuiz(linha.get("Titular"));
+                            dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
+                        }
+                    }
                     return;
                 }
             }
