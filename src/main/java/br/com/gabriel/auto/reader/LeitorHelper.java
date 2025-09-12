@@ -4,6 +4,7 @@ import br.com.gabriel.auto.model.AutoDados;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -129,7 +130,19 @@ public class LeitorHelper {
         dados.setCidadeJuizo(cidadeJuizo);
     }
 
-
+    public static String normalizarNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return nome;
+        }
+        // Remove espaços múltiplos e os substitui por um único espaço
+        String nomeCorrigido = nome.replaceAll("\\s+", " ");
+        
+        // Remove a quebra de linha
+        nomeCorrigido = nomeCorrigido.replace("\n", "");
+        
+        return nomeCorrigido.trim();
+    }
+    
     public static void extrairDadosCsv(AutoDados dados){
         String nomeComitente = dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo();
         String caminhoArquivoCSV = "arquivos/arquivo.csv";
@@ -161,16 +174,23 @@ public class LeitorHelper {
 
                     String complementoJuizo = linha.get("Complemento");
                     dados.setComplementoJuizo(complementoJuizo);
+                    
+                    String nomeJuiz = linha.get("Titular");
+                    dados.setNomeJuiz(normalizarNome(nomeJuiz));
 
                     for(int i = 1; i < 10; i++){
-                    	LocalDate dataInicio = LocalDate.parse(linha.get(String.format("Substituto %d Início", i)), formatter);
-                        LocalDate dataFim = LocalDate.parse(linha.get(String.format("Substituto %d Fim", i)), formatter);
-                        
-                        if(dataInicio.isBefore(LocalDate.now()) && dataFim.isAfter(LocalDate.now())){
-                            dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
-                        }else{
-                            dados.setNomeJuiz(linha.get("Titular"));                    
+                    	String inicio = linha.get(String.format("Substituto %d Início", i));
+                        String fim = linha.get(String.format("Substituto %d Fim", i));
+                        if(inicio != null && !inicio.isEmpty() && fim != null && !fim.isEmpty()) {
+                        	LocalDate dataInicio = LocalDate.parse(inicio, formatter);
+                            LocalDate dataFim = LocalDate.parse(fim, formatter);
+                            
+                            if(dataInicio.isBefore(LocalDate.now()) && dataFim.isAfter(LocalDate.now())){
+                                dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
+                                break;
+                            }
                         }
+                        
                     }
                     return;
                 }
