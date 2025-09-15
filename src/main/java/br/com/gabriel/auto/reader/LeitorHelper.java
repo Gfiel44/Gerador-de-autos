@@ -178,7 +178,11 @@ public class LeitorHelper {
                     String nomeJuiz = linha.get("Titular");
                     dados.setNomeJuiz(normalizarNome(nomeJuiz));
 
+                    String nomeJuiz = linha.get("Titular");
+                    dados.setNomeJuiz(nomeJuiz);
+
                     for(int i = 1; i < 10; i++){
+<<<<<<< Updated upstream
                     	String inicio = linha.get(String.format("Substituto %d Início", i));
                         String fim = linha.get(String.format("Substituto %d Fim", i));
                         if(inicio != null && !inicio.isEmpty() && fim != null && !fim.isEmpty()) {
@@ -188,11 +192,37 @@ public class LeitorHelper {
                             if(dataInicio.isBefore(LocalDate.now()) && dataFim.isAfter(LocalDate.now())){
                                 dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
                                 break;
+=======
+                        // Verifica se o campo do juiz substituto existe e não está vazio
+                        String inicio = linha.get(String.format("Substituto %d Início", i));
+                        String fim = linha.get(String.format("Substituto %d Fim", i));
+
+                        if (inicio != null && !inicio.isEmpty() && fim != null && !fim.isEmpty()) {
+                            LocalDate dataInicio = LocalDate.parse(inicio, formatter);
+                            LocalDate dataFim = LocalDate.parse(fim, formatter);
+
+                            if (LocalDate.now().isAfter(dataInicio.minusDays(1)) && LocalDate.now().isBefore(dataFim.plusDays(1))) {
+                                dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
+                                return;
+                            }
+                        }
+                    }
+                    for (int i = 1; i <= 7; i++) {
+                        String inicio = linha.get(String.format("Designado %d Início", i));
+                        String fim = linha.get(String.format("Designado %d Fim", i));
+
+                        if (inicio != null && !inicio.isEmpty() && fim != null && !fim.isEmpty()) {
+                            LocalDate dataInicio = LocalDate.parse(inicio, formatter);
+                            LocalDate dataFim = LocalDate.parse(fim, formatter);
+
+                            if (LocalDate.now().isAfter(dataInicio.minusDays(1)) && LocalDate.now().isBefore(dataFim.plusDays(1))) {
+                                dados.setNomeJuiz(linha.get(String.format("Designado %d Nome", i)));
+                                return;
+>>>>>>> Stashed changes
                             }
                         }
                         
                     }
-                    return;
                 }
             }
         }catch (IOException e){
