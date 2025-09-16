@@ -129,19 +129,6 @@ public class LeitorHelper {
         String cidadeJuizo = encontrarInformacao(textoCompleto, "da Comarca de (.*)");
         dados.setCidadeJuizo(cidadeJuizo);
     }
-
-    public static String normalizarNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            return nome;
-        }
-        // Remove espaços múltiplos e os substitui por um único espaço
-        String nomeCorrigido = nome.replaceAll("\\s+", " ");
-        
-        // Remove a quebra de linha
-        nomeCorrigido = nomeCorrigido.replace("\n", "");
-        
-        return nomeCorrigido.trim();
-    }
     
     public static void extrairDadosCsv(AutoDados dados){
         String nomeComitente = dados.getJuizoDeDireito() + " de " + dados.getCidadeJuizo();
@@ -174,26 +161,11 @@ public class LeitorHelper {
 
                     String complementoJuizo = linha.get("Complemento");
                     dados.setComplementoJuizo(complementoJuizo);
-                    
-                    String nomeJuiz = linha.get("Titular");
-                    dados.setNomeJuiz(normalizarNome(nomeJuiz));
 
                     String nomeJuiz = linha.get("Titular");
                     dados.setNomeJuiz(nomeJuiz);
 
-                    for(int i = 1; i < 10; i++){
-<<<<<<< Updated upstream
-                    	String inicio = linha.get(String.format("Substituto %d Início", i));
-                        String fim = linha.get(String.format("Substituto %d Fim", i));
-                        if(inicio != null && !inicio.isEmpty() && fim != null && !fim.isEmpty()) {
-                        	LocalDate dataInicio = LocalDate.parse(inicio, formatter);
-                            LocalDate dataFim = LocalDate.parse(fim, formatter);
-                            
-                            if(dataInicio.isBefore(LocalDate.now()) && dataFim.isAfter(LocalDate.now())){
-                                dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
-                                break;
-=======
-                        // Verifica se o campo do juiz substituto existe e não está vazio
+                    for (int i = 1; i <= 10; i++) {
                         String inicio = linha.get(String.format("Substituto %d Início", i));
                         String fim = linha.get(String.format("Substituto %d Fim", i));
 
@@ -201,12 +173,13 @@ public class LeitorHelper {
                             LocalDate dataInicio = LocalDate.parse(inicio, formatter);
                             LocalDate dataFim = LocalDate.parse(fim, formatter);
 
-                            if (LocalDate.now().isAfter(dataInicio.minusDays(1)) && LocalDate.now().isBefore(dataFim.plusDays(1))) {
+                            if (dataInicio.minusDays(1).isBefore(LocalDate.now()) && dataFim.plusDays(1).isAfter(LocalDate.now())) {
                                 dados.setNomeJuiz(linha.get(String.format("Substituto %d Nome", i)));
                                 return;
                             }
                         }
                     }
+
                     for (int i = 1; i <= 7; i++) {
                         String inicio = linha.get(String.format("Designado %d Início", i));
                         String fim = linha.get(String.format("Designado %d Fim", i));
@@ -215,13 +188,11 @@ public class LeitorHelper {
                             LocalDate dataInicio = LocalDate.parse(inicio, formatter);
                             LocalDate dataFim = LocalDate.parse(fim, formatter);
 
-                            if (LocalDate.now().isAfter(dataInicio.minusDays(1)) && LocalDate.now().isBefore(dataFim.plusDays(1))) {
+                            if (dataInicio.minusDays(1).isBefore(LocalDate.now()) && dataFim.plusDays(1).isAfter(LocalDate.now())) {
                                 dados.setNomeJuiz(linha.get(String.format("Designado %d Nome", i)));
-                                return;
->>>>>>> Stashed changes
+                                return; // Sai do método após encontrar o juiz correto.
                             }
                         }
-                        
                     }
                 }
             }
