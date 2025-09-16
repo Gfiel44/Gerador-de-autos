@@ -1,7 +1,7 @@
 package br.com.gabriel.auto.model;
 
 public class AutoDados {
-    private String juizoDeDireito, cidadeJuizo, praca, numeroProcesso, nomeExecutado, nomeExequente, diaPrimeiroLeilao, diaSegundoLeilao, mesPrimeiroLeilao, mesSegundoLeilao, anoPrimeiroLeilao, anoSegundoLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
+    private String juizoDeDireito, cidadeJuizo, UfJuizo, CepJuizo, enderecoJuizo, numeroEnderecoJuizo, bairroJuizo, complementoJuizo, praca, numeroProcesso, nomeExecutado, nomeExequente, diaPrimeiroLeilao, diaSegundoLeilao, mesPrimeiroLeilao, mesSegundoLeilao, anoPrimeiroLeilao, anoSegundoLeilao, horaLeilao, lote, valor, loginArrematante, nomeArrematante, cpfArrematante, rgArrematante, enderecoArrematante, cidadeArrematante, cepArrematante, emailArrematante, telefoneArrematante, celularArrematante, ipArrematante, descricao, nomeJuiz;
 
 
     public String getJuizoDeDireito() {
@@ -14,10 +14,27 @@ public class AutoDados {
     public String getCidadeJuizo() {
         return cidadeJuizo;
     }
-
     public void setCidadeJuizo(String cidadeJuizo) {
         this.cidadeJuizo = cidadeJuizo;
     }
+
+    public String getUfJuizo() {return UfJuizo;}
+    public void setUfJuizo(String ufJuizo) {UfJuizo = ufJuizo;}
+
+    public String getCepJuizo() {return CepJuizo;}
+    public void setCepJuizo(String cepJuizo) {CepJuizo = cepJuizo;}
+
+    public String getEnderecoJuizo() {return enderecoJuizo;}
+    public void setEnderecoJuizo(String enderecoJuizo) {this.enderecoJuizo = enderecoJuizo;}
+
+    public String getNumeroEnderecoJuizo() {return numeroEnderecoJuizo;}
+    public void setNumeroEnderecoJuizo(String numeroEnderecoJuizo) {this.numeroEnderecoJuizo = numeroEnderecoJuizo;}
+
+    public String getBairroJuizo() {return bairroJuizo;}
+    public void setBairroJuizo(String bairroJuizo) {this.bairroJuizo = bairroJuizo;}
+
+    public String getComplementoJuizo() {return complementoJuizo;}
+    public void setComplementoJuizo(String complementoJuizo) {this.complementoJuizo = complementoJuizo;}
 
     public String getPraca() {
         return praca;
@@ -212,6 +229,12 @@ public class AutoDados {
         return "AutoDados{" +
                 "juizoDeDireito='" + juizoDeDireito + '\'' +
                 ", cidadeJuizo='" + cidadeJuizo + '\'' +
+                ", UfJuizo='" + UfJuizo + '\'' +
+                ", CepJuizo='" + CepJuizo + '\'' +
+                ", enderecoJuizo='" + enderecoJuizo + '\'' +
+                ", numeroEnderecoJuizo='" + numeroEnderecoJuizo + '\'' +
+                ", bairroJuizo='" + bairroJuizo + '\'' +
+                ", complementoJuizo='" + complementoJuizo + '\'' +
                 ", praca='" + praca + '\'' +
                 ", numeroProcesso='" + numeroProcesso + '\'' +
                 ", nomeExecutado='" + nomeExecutado + '\'' +
